@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anees Muhammad - Portfolio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+        
+        :root {
+            --primary: #00f2ff;
+            --secondary: #0084ff;
+            --background: #050517;
+            --terminal-bg: rgba(0, 10, 30, 0.85);
+            --text: #ffffff;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            font-family: 'Space Mono', monospace;
+            background-color: var(--background);
+            color: var(--text);
+            overflow-x: hidden;
+        }
+        
+        /* Animated Background */
+        .background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+        
+        .stars {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .star {
+            position: absolute;
+            background-color: #fff;
+            border-radius: 50%;
+            animation: twinkle 2s infinite;
+        }
+        
+        .grid {
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            top: -50%;
+            left: -50%;
+            background-image: 
+                linear-gradient(rgba(0, 132, 255, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 132, 255, 0.1) 1px, transparent 1px);
+            background-size: 40px 40px;
+            transform: perspective(500px) rotateX(60deg);
+            animation: grid-move 20s linear infinite;
+        }
+        
+        .circles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .circle {
+            position: absolute;
+            border-radius: 50%;
+            border: 2px solid var(--primary);
+            opacity: 0;
+            animation: expand 8s ease-out infinite;
+        }
+        
+        /* Animations */
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.2; }
+            50% { opacity: 1; }
+        }
+        
+        @keyframes grid-move {
+            0% { transform: perspective(500px) rotateX(60deg) translateY(0); }
+            100% { transform: perspective(500px) rotateX(60deg) translateY(40px); }
+        }
+        
+        @keyframes expand {
+            0% { transform: scale(0); opacity: 0.7; }
+            100% { transform: scale(1.5); opacity: 0; }
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        @keyframes typing {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+        
+        /* Header Section */
+        header {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            padding: 0 20px;
+        }
+        
+        .profile-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        .profile-image {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            border: 4px solid var(--primary);
+            overflow: hidden;
+            box-shadow: 0 0 30px var(--primary);
+        }
+        
+        .profile-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .name {
+            margin-top: 20px;
+            font-size: 3rem;
+            font-weight: bold;
+            font-style: italic;
+            text-align: center;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 10px rgba(0, 242, 255, 0.5);
+        }
+        
+        .title {
+            font-size: 1.5rem;
+            font-style: italic;
+            margin-top: 10px;
+            color: var(--primary);
+        }
+        
+        .scroll-indicator {
+            position: absolute;
+            bottom: 30px;
+            font-size: 2rem;
+            animation: float 2s ease-in-out infinite;
+            color: var(--primary);
+            cursor: pointer;
+        }
+        
+        /* Terminal Section */
+        .terminal-section {
+            min-height: 100vh;
+            padding: 100px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: bold;
+            font-style: italic;
+            margin-bottom: 50px;
+            text-align: center;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .terminal {
+            width: 100%;
+            max-width: 800px;
+            background-color: var(--terminal-bg);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 30px rgba(0, 242, 255, 0.3);
+            border: 1px solid var(--primary);
+        }
+        
+        .terminal-header {
+            display: flex;
+            margin-bottom: 20px;
+        }
+        
+        .terminal-circle {
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+        
+        .circle-red { background-color: #ff5f56; }
+        .circle-yellow { background-color: #ffbd2e; }
+        .circle-green { background-color: #27c93f; }
+        
+        .terminal-title {
+            flex-grow: 1;
+            text-align: center;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .terminal-body {
+            font-family: 'Space Mono', monospace;
+            color: var(--text);
+            line-height: 1.6;
+        }
+        
+        .terminal-line {
+            margin-bottom: 10px;
+            display: flex;
+        }
+        
+        .prompt {
+            color: var(--primary);
+            margin-right: 10px;
+            white-space: nowrap;
+        }
+        
+        .line-content {
+            overflow: hidden;
+            white-space: nowrap;
+            animation: typing 1s steps(30, end);
+        }
+        
+        .cursor {
+            display: inline-block;
+            width: 10px;
+            height: 18px;
+            background-color: var(--primary);
+            animation: blink 1s step-end infinite;
+            vertical-align: text-bottom;
+            margin-left: 5px;
+        }
+        
+        @keyframes blink {
+            from, to { opacity: 1; }
+            50% { opacity: 0; }
+        }
+        
+        /* About Section */
+        .about-section {
+            min-height: 100vh;
+            padding: 100px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .about-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .about-text {
+            text-align: center;
+            line-height: 1.8;
+            margin-bottom: 40px;
+            font-style: italic;
+        }
+        
+        .skills {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        
+        .skill {
+            background-color: rgba(0, 242, 255, 0.1);
+            border: 1px solid var(--primary);
+            padding: 10px 20px;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+        }
+        
+        .skill:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 242, 255, 0.5);
+        }
+        
+        /* Social Section */
+        .social-section {
+            min-height: 100vh;
+            padding: 100px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .social-icons {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 50px;
+        }
+        
+        .social-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background-color: rgba(0, 242, 255, 0.1);
+            border: 2px solid var(--primary);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.3s ease;
+            color: var(--primary);
+            font-size: 2rem;
+            text-decoration: none;
+        }
+        
+        .social-icon:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 0 20px var(--primary);
+            background-color: var(--primary);
+            color: var(--background);
+        }
+        
+        /* Footer */
+        footer {
+            padding: 50px 20px;
+            text-align: center;
+            border-top: 1px solid rgba(0, 242, 255, 0.3);
+        }
+        
+        .developer {
+            margin-top: 20px;
+            font-style: italic;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .developer span {
+            color: var(--primary);
+            font-weight: bold;
+        }
+        
+        /* Music Player */
+        .music-player {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--terminal-bg);
+            border-radius: 10px;
+            padding: 15px;
+            border: 1px solid var(--primary);
+            box-shadow: 0 0 20px rgba(0, 242, 255, 0.3);
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .music-title {
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 200px;
+        }
+        
+        .music-controls {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .music-btn {
+            background: none;
+            border: none;
+            color: var(--primary);
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .music-btn:hover {
+            color: var(--text);
+            transform: scale(1.2);
+        }
+        
+        .volume-control {
+            margin-top: 10px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .volume-slider {
+            flex-grow: 1;
+            -webkit-appearance: none;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 5px;
+            outline: none;
+        }
+        
+        .volume-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background: var(--primary);
+            cursor: pointer;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .name {
+                font-size: 2.5rem;
+            }
+            
+            .title {
+                font-size: 1.2rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .terminal {
+                max-width: 100%;
+            }
+            
+            .social-icon {
+                width: 60px;
+                height: 60px;
+                font-size: 1.5rem;
+            }
+            
+            .music-player {
+                bottom: 10px;
+                right: 10px;
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="background">
+        <div class="stars" id="stars"></div>
+        <div class="grid"></div>
+        <div class="circles" id="circles"></div>
+    </div>
+    
+    <!-- Header Section -->
+    <header id="home">
+        <div class="profile-container">
+            <div class="profile-image">
+                <img src="/api/placeholder/400/400" alt="Anees Muhammad">
+            </div>
+            <h1 class="name">Anees Muhammad</h1>
+            <p class="title">Developer & Tech Enthusiast</p>
+        </div>
+        <div class="scroll-indicator" onclick="document.getElementById('terminal').scrollIntoView()">
+            <i class="fas fa-chevron-down"></i>
+        </div>
+    </header>
+    
+    <!-- Terminal Section -->
+    <section class="terminal-section" id="terminal">
+        <h2 class="section-title">Command Line</h2>
+        <div class="terminal">
+            <div class="terminal-header">
+                <div class="terminal-circle circle-red"></div>
+                <div class="terminal-circle circle-yellow"></div>
+                <div class="terminal-circle circle-green"></div>
+                <div class="terminal-title">anees@portfolio ~ </div>
+            </div>
+            <div class="terminal-body">
+                <div class="terminal-line">
+                    <div class="prompt">anees@portfolio:~$</div>
+                    <div class="line-content">whoami</div>
+                </div>
+                <div class="terminal-line">
+                    <div class="prompt"></div>
+                    <div class="line-content">Anees Muhammad - Developer & Tech Enthusiast</div>
+                </div>
+                <div class="terminal-line">
+                    <div class="prompt">anees@portfolio:~$</div>
+                    <div class="line-content">cat skills.txt</div>
+                </div>
+                <div class="terminal-line">
+                    <div class="prompt"></div>
+                    <div class="line-content">Web Development, UI/UX Design, Software Engineering, AI/ML</div>
+                </div>
+                <div class="terminal-line">
+                    <div class="prompt">anees@portfolio:~$</div>
+                    <div class="line-content">ls -la projects/</div>
+                </div>
+                <div class="terminal-line">
+                    <div class="prompt"></div>
+                    <div class="line-content">project1.app project2.app project3.app portfolio.app</div>
+                </div>
+                <div class="terminal-line">
+                    <div class="prompt">anees@portfolio:~$</div>
+                    <div class="line-content">contact --info</div>
+                </div>
+                <div class="terminal-line">
+                    <div class="prompt"></div>
+                    <div class="line-content">Email: anees@example.com | Phone: +1 (555) 123-4567</div>
+                </div>
+                <div class="terminal-line">
+                    <div class="prompt">anees@portfolio:~$</div>
+                    <div class="line-content"></div>
+                    <span class="cursor"></span>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- About Section -->
+    <section class="about-section" id="about">
+        <h2 class="section-title">About Me</h2>
+        <div class="about-content">
+            <p class="about-text">
+                <em>Hello, I'm <strong>Anees Muhammad</strong>, a passionate developer and tech enthusiast. I specialize in creating innovative solutions that combine cutting-edge technology with intuitive design. With a background in software engineering and a keen eye for detail, I strive to build applications that not only function flawlessly but also provide exceptional user experiences.</em>
+            </p>
+            <p class="about-text">
+                <em>My journey in technology began with a fascination for how things work, which eventually led me to explore the vast world of programming and development. Today, I continue to expand my knowledge and skills, always staying current with the latest industry trends and technologies.</em>
+            </p>
+            <div class="skills">
+                <div class="skill">Web Development</div>
+                <div class="skill">UI/UX Design</div>
+                <div class="skill">JavaScript</div>
+                <div class="skill">React</div>
+                <div class="skill">Node.js</div>
+                <div class="skill">Python</div>
+                <div class="skill">Machine Learning</div>
+                <div class="skill">Cloud Computing</div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Social Section -->
+    <section class="social-section" id="social">
+        <h2 class="section-title">Connect With Me</h2>
+        <div class="social-icons">
+            <a href="#" class="social-icon">
+                <i class="fab fa-github"></i>
+            </a>
+            <a href="#" class="social-icon">
+                <i class="fab fa-linkedin"></i>
+            </a>
+            <a href="#" class="social-icon">
+                <i class="fab fa-twitter"></i>
+            </a>
+            <a href="#" class="social-icon">
+                <i class="fab fa-instagram"></i>
+            </a>
+            <a href="#" class="social-icon">
+                <i class="far fa-envelope"></i>
+            </a>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer>
+        <p>© 2025 All Rights Reserved</p>
+        <p class="developer">Designed & Developed by <span>Anees Muhammad</span></p>
+    </footer>
+    
+    <!-- Music Player -->
+    <div class="music-player">
+        <p class="music-title">Ambient Sci-Fi Theme</p>
+        <div class="music-controls">
+            <button class="music-btn" id="prev-btn"><i class="fas fa-step-backward"></i></button>
+            <button class="music-btn" id="play-btn"><i class="fas fa-play"></i></button>
+            <button class="music-btn" id="next-btn"><i class="fas fa-step-forward"></i></button>
+        </div>
+        <div class="volume-control">
+            <i class="fas fa-volume-down"></i>
+            <input type="range" min="0" max="100" value="70" class="volume-slider" id="volume-slider">
+            <i class="fas fa-volume-up"></i>
+        </div>
+    </div>
+    
+    <script>
+        // Create stars
+        document.addEventListener('DOMContentLoaded', function() {
+            const starsContainer = document.getElementById('stars');
+            const numberOfStars = 200;
+            
+            for (let i = 0; i < numberOfStars; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                
+                // Random size between 1 and 3px
+                const size = Math.random() * 2 + 1;
+                star.style.width = size + 'px';
+                star.style.height = size + 'px';
+                
+                // Random position
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                
+                // Random animation delay
+                star.style.animationDelay = Math.random() * 2 + 's';
+                
+                starsContainer.appendChild(star);
+            }
+            
+            // Create expanding circles
+            const circlesContainer = document.getElementById('circles');
+            const numberOfCircles = 5;
+            
+            for (let i = 0; i < numberOfCircles; i++) {
+                const circle = document.createElement('div');
+                circle.className = 'circle';
+                
+                // Random position
+                circle.style.left = Math.random() * 100 + '%';
+                circle.style.top = Math.random() * 100 + '%';
+                
+                // Random size
+                const size = Math.random() * 100 + 50;
+                circle.style.width = size + 'px';
+                circle.style.height = size + 'px';
+                
+                // Random animation delay
+                circle.style.animationDelay = Math.random() * 8 + 's';
+                
+                circlesContainer.appendChild(circle);
+            }
+        });
+        
+        // Smooth scrolling for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+        
+        // Terminal text animation
+        document.addEventListener('DOMContentLoaded', function() {
+            const terminalLines = document.querySelectorAll('.line-content');
+            let delay = 0;
+            
+            terminalLines.forEach((line, index) => {
+                line.style.width = '0';
+                setTimeout(() => {
+                    line.style.animation = `typing 1s steps(${line.textContent.length}, end) forwards`;
+                }, delay);
+                delay += 1000;
+            });
+        });
+        
+        // Music player functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const playBtn = document.getElementById('play-btn');
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+            const volumeSlider = document.getElementById('volume-slider');
+            
+            // Create audio element
+            const audio = new Audio();
+            audio.src = 'https://cdnjs.cloudflare.com/ajax/libs/ion-sound/3.0.7/sounds/button_click.mp3'; // Placeholder sound
+            audio.loop = true;
+            
+            let isPlaying = false;
+            
+            // Play/pause function
+            playBtn.addEventListener('click', function() {
+                if (isPlaying) {
+                    audio.pause();
+                    playBtn.innerHTML = '<i class="fas fa-play"></i>';
+                    isPlaying = false;
+                } else {
+                    audio.play();
+                    playBtn.innerHTML = '<i class="fas fa-pause"></i>';
+                    isPlaying = true;
+                }
+            });
+            
+            // Volume control
+            volumeSlider.addEventListener('input', function() {
+                audio.volume = this.value / 100;
+            });
+            
+            // Placeholder for previous and next buttons
+            prevBtn.addEventListener('click', function() {
+                // Would change to previous track in a real implementation
+                audio.currentTime = 0;
+            });
+            
+            nextBtn.addEventListener('click', function() {
+                // Would change to next track in a real implementation
+                audio.currentTime = 0;
+            });
+        });
+        
+        // Reveal elements on scroll
+        document.addEventListener('DOMContentLoaded', function() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('revealed');
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            // Observe all sections
+            document.querySelectorAll('section').forEach(section => {
+                observer.observe(section);
+            });
+        });
+    </script>
+</body>
+</html>
